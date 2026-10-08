@@ -3,8 +3,8 @@ import app from "../../are_na.app.mjs";
 export default {
   key: "are_na-update-channel",
   name: "Update Channel",
-  description: "Update a Channel with the specified slug. [See the documentation](https://dev.are.na/documentation/channels#Block45048)",
-  version: "0.0.2",
+  description: "Update a Channel with the specified slug. [See the documentation](https://www.are.na/developers/explore/channel)",
+  version: "0.0.3",
   annotations: {
     destructiveHint: true,
     openWorldHint: true,
@@ -36,9 +36,9 @@ export default {
     const response = await this.app.updateChannel({
       $,
       slug: this.channelSlug,
-      params: {
+      data: {
         title: this.channelTitle,
-        status: this.channelStatus,
+        visibility: this.channelStatus,
       },
     });
     $.export("$summary", `Successfully updated channel with slug: '${this.channelSlug}'`);

@@ -4,7 +4,7 @@ export default {
   key: "are_na-list-channel-slug-options",
   name: "List Channel Slug Options",
   description: "Retrieves available options for the Channel Slug field.",
-  version: "0.0.1",
+  version: "0.0.2",
   type: "action",
   annotations: {
     destructiveHint: false,
@@ -15,7 +15,9 @@ export default {
     are_na,
   },
   async run({ $ }) {
-    const options = await are_na.propDefinitions.channelSlug.options.call(this.are_na);
+    const options = await are_na.propDefinitions.channelSlug.options.call(this.are_na, {
+      page: 0,
+    });
     $.export("$summary", `Successfully retrieved ${options.length} option${options.length === 1
       ? ""
       : "s"}`);

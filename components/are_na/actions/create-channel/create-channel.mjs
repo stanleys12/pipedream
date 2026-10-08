@@ -3,8 +3,8 @@ import app from "../../are_na.app.mjs";
 export default {
   key: "are_na-create-channel",
   name: "Create Channel",
-  description: "Create a new channel in Are.na. [See the documentation](https://dev.are.na/documentation/channels#Block45041)",
-  version: "0.0.2",
+  description: "Create a new channel in Are.na. [See the documentation](https://www.are.na/developers/explore/channel)",
+  version: "0.0.3",
   annotations: {
     destructiveHint: false,
     openWorldHint: true,
@@ -29,9 +29,9 @@ export default {
   async run({ $ }) {
     const response = await this.app.createChannel({
       $,
-      params: {
+      data: {
         title: this.channelTitle,
-        status: this.channelStatus,
+        visibility: this.channelStatus,
       },
     });
     $.export("$summary", `Successfully created channel '${this.channelTitle}' with slug '${response.slug}'`);

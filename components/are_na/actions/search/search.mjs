@@ -3,8 +3,8 @@ import are_na from "../../are_na.app.mjs";
 export default {
   key: "are_na-search",
   name: "Perform a Search",
-  description: "Search across all of Are.na (returns channels, blocks and users that match the query)",
-  version: "0.0.3",
+  description: "Search across all of Are.na (returns channels, blocks, users and groups that match the query). Requires an Are.na Premium subscription. [See the documentation](https://www.are.na/developers/explore/search)",
+  version: "0.0.4",
   annotations: {
     destructiveHint: false,
     openWorldHint: true,
@@ -23,10 +23,12 @@ export default {
   async run({ $ }) {
     const response = await this.are_na.search({
       $,
-      query: this.query,
+      params: {
+        query: this.query,
+      },
     });
 
-    $.export("$summary", `Search returned ${response.length} results`);
+    $.export("$summary", `Search returned ${response.data.length} results`);
     return response;
   },
 };

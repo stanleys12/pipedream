@@ -9,10 +9,17 @@ export default {
       type: "string",
       label: "Channel Slug",
       description: "Slug of the Channel",
-      async options() {
-        const response = await this.getChannels();
-        const channelsSlugs = response.channels;
-        return channelsSlugs.map(({
+      async options({ page }) {
+        const user = await this.getAuthenticatedUser();
+        const { data } = await this.getUserContents({
+          slug: user.slug,
+          params: {
+            type: "Channel",
+            page: page + 1,
+            per: 100,
+          },
+        });
+        return data.map(({
           slug, title,
         }) => ({
           value: slug,
@@ -28,7 +35,7 @@ export default {
     channelStatus: {
       type: "string",
       label: "Channel Status",
-      description: "Status of the Channel",
+      description: "Visibility of the Channel",
       options: constants.CHANNEL_STATUS,
     },
     query: {
@@ -39,7 +46,7 @@ export default {
   },
   methods: {
     _baseUrl() {
-      return "http://api.are.na/v2";
+      return "https://api.are.na/v3";
     },
     async _makeRequest(opts = {}) {
       const {
@@ -60,15 +67,13 @@ export default {
     getAuthenticatedUser(args = {}) {
       return this._makeRequest({
         path: "/me",
-        args,
+        ...args,
       });
     },
-    search({
-      query, ...args
-    }) {
+    search(args = {}) {
       return this._makeRequest({
-        path: `/search?q=${query}`,
-        args,
+        path: "/search",
+        ...args,
       });
     },
     async createChannel(args = {}) {
@@ -96,9 +101,11 @@ export default {
         ...args,
       });
     },
-    async getChannels(args = {}) {
+    async getUserContents({
+      slug, ...args
+    }) {
       return this._makeRequest({
-        path: "/search/channels",
+        path: `/users/${slug}/contents`,
         ...args,
       });
     },

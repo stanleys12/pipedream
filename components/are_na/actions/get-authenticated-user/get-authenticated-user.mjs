@@ -3,8 +3,8 @@ import are_na from "../../are_na.app.mjs";
 export default {
   key: "are_na-get-authenticated-user",
   name: "Get Authenticated User",
-  description: "Returns the currently authenticated user",
-  version: "0.0.3",
+  description: "Returns the currently authenticated user. [See the documentation](https://www.are.na/developers/explore/user)",
+  version: "0.0.4",
   annotations: {
     destructiveHint: false,
     openWorldHint: true,
